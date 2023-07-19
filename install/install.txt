@@ -1,0 +1,31 @@
+//install GitHub CLI 
+
+type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+&& sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+&& sudo apt update \
+&& sudo apt install gh -y
+
+/Install Git CLI 
+
+apt-get install git
+
+
+
+/get file commit history 
+git log -- /root/make-account/scenarios/testcommit2.txt
+
+restore file to state of commit by commit ID
+git checkout 9c5b9c008ab9574e40dea8d3df9e6ac763eedfff -- /root/make-acco
+unt/scenarios/testcommit2.txt
+
+
+// get/pull updated from GH repo 
+
+ git pull origin main
+
+
+
+// npm packages
+npm install axios
