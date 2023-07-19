@@ -4,4 +4,4 @@ cd /root/cnc-node
 
 node test.js
 
-echo "Script ended at $(date)"
+echo "Script scenarios ended at $(date)"
