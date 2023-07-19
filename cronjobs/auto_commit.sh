@@ -7,7 +7,7 @@ git config --global user.email "${GITHUB_EMAIL}"
 git config --global user.name "${GITHUB_USERNAME}"
 
 
-git remote set-url origin https://chklff:${GITHUB_DEV_TOKEN}@github.com/chklff/make-account.git
+git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_DEV_TOKEN}@github.com/${GITHUB_USERNAME}/make-account.git
 
 git add .
 git commit -m "Sync From Make Commit as of "$(date)
