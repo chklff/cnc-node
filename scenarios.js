@@ -67,8 +67,7 @@ const listScenarios = async (url, organizationId, limit, token) => {
             params: {
                 organizationId: organizationId,
                 'pg[offset]':0,
-                'pg[limit]': limit,
-                'pg[returnTotalCount]': true
+                'pg[limit]': limit
             },
             headers: {
                 "Authorization": `Token ${token}`

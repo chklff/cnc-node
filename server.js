@@ -1,12 +1,15 @@
 const express = require('express');
 const winston = require('winston');
+require('dotenv').config();
 const processWebhook = require('./githubWebhookHandler').processWebhook;
 const app = express();
-const port = 5555;
+const port = process.env.PORT
+const server = process.env.SERVER
 const githubUsername = "chklff";
-const baseURL = 'https://us1.make.com'; 
-const token = '71022599-f619-4757-bf10-79993d74cb90';
+const baseURL = process.env.INSTANCE_URL; 
+const token = process.env.MAKE_API_KEY; //'71022599-f619-4757-bf10-79993d74cb90';
 const makeFolder = '/root/make-account'
+
 
 
 app.use(express.json()); // This middleware is for parsing JSON in the body of the request
@@ -74,5 +77,5 @@ app.post('/webhook', (req, res) => {
 
 
 app.listen(port, () => {
-    logger.info(`Server running at http://165.22.181.185:${port}`);
+    logger.info(`Server running at ${server}:${port}`);
 });
