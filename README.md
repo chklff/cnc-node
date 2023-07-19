@@ -1,0 +1,3 @@
+# cnc-node
+
+I'M read em I'll tell you how to iunstall me... 
