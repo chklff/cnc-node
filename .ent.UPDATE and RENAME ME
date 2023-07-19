@@ -1,0 +1,8 @@
+SERVER=http://1.1.1.1
+PORT=5555
+MAKE_API_KEY=xxxxxx
+INSTANCE_URL=https://us1.make.com
+MAKE_ORG_ID=xxxx
+GITHUB_DEV_TOKEN=xxxx
+GITHUB_USERNAME=xxxxx
+GITHUB_EMAIL=xxxxx
