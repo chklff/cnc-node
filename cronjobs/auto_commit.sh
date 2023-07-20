@@ -11,6 +11,8 @@ git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_DEV_TOKEN}@github.
 
 git add .
 git commit -m "Sync From Make Commit as of $(date)"
-git push origin main
+
+# Push your changes, masking the URL in the output
+git push origin main 2>&1 | sed "s|https://[^ ]*|https://[masked]/...|g"
 
 echo "Script ended at $(date)"
