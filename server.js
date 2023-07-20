@@ -1,7 +1,7 @@
 const express = require('express');
 const winston = require('winston');
 require('dotenv').config();
-const processWebhook = require('./githubWebhookHandler').processWebhook;
+const processWebhook = require('./githubWebhookHandler.js').processWebhook;
 const app = express();
 const port = process.env.PORT
 const server = process.env.SERVER
@@ -68,7 +68,7 @@ app.get('/scenarios');
 // });
 
 app.post('/webhook', (req, res) => {
-  console.log(githubUsername + '\n' + makeFolder + '\n' +  baseURL + '\n' + token)
+  console.log(githubUsername + '\n' + makeFolder + '\n' +  baseURL)
   processWebhook(req, githubUsername, makeFolder, baseURL, token);
 
   // Send a simple response
