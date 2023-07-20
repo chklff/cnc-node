@@ -1,0 +1,5 @@
+On branch main
+nothing to commit, working tree clean
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/chklff/make-account.git/'
+Script ended at Thu Jul 20 18:15:01 UTC 2023
