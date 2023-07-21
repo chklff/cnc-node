@@ -1,7 +1,7 @@
 // test.js
 const listScenarios = require('./scenarios.js');
-const getApplicationFiles = require('./getapplication.js');
-const getAllAppsFiles = require('./getapplication.js');
+const getApplicationFiles = require('./applications.js');
+const getAllAppsFiles = require('./applications.js');
 require('dotenv').config();
 
 // const url = 'https://eu1.make.com';

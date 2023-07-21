@@ -2,6 +2,6 @@
 
 cd /root/cnc-node
 
-node test.js
+node syncMake.js
 
 echo "Script scenarios ended at $(date)"
