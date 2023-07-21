@@ -2,12 +2,8 @@
 const listScenarios = require('./scenarios.js');
 const getApplicationFiles = require('./applications.js');
 const getAllAppsFiles = require('./applications.js');
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
-// const url = 'https://eu1.make.com';
-// const organizationId = 11;
-// const limit = true;
-// const token = 'xxxx';
 
 //Retrieve scenarios
 (async () => {

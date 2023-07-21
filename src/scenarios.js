@@ -1,6 +1,8 @@
 // scenarios.js
 const axios = require('axios');
 const fs = require('fs').promises;
+require('dotenv').config({ path: '../.env' });
+const makeFolder = process.env.MAKE_FOLDER_PATH;
 
 const listScenarios = async (url, organizationId, limit, token) => {
     try {
@@ -33,14 +35,14 @@ const listScenarios = async (url, organizationId, limit, token) => {
                 scenarioName = scenarioName.replace(/[/\\?%*:|"<>]/g, '_');
 
                 // Create the scenarios directory if it does not exist
-                await fs.mkdir(`../make-account/scenarios`, { recursive: true });
+                await fs.mkdir(`${makeFolder}/scenarios`, { recursive: true });
 
                 // Write the blueprint to a JSON file
-                await fs.writeFile(`../make-account/scenarios/${scenarioName}-${scenario.id}.json`, JSON.stringify(blueprintResponse.data.response.blueprint, null, 2));
+                await fs.writeFile(`${makeFolder}/scenarios/${scenarioName}-${scenario.id}.json`, JSON.stringify(blueprintResponse.data.response.blueprint, null, 2));
 
                 // Increment the file count
                 fileCount++;
-
+                
                 return blueprintResponse.data.response.blueprint;
             } catch (error) {
                 console.error(`Error making blueprint request: ${error}`);
@@ -55,7 +57,6 @@ const listScenarios = async (url, organizationId, limit, token) => {
         // ... rest of your error handling code ...
     }
 }
-
 
 // const listOrginizations = async (url,  limit, token) => {
 //     try {

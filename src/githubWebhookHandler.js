@@ -3,6 +3,8 @@ const axios = require('axios');
 const fs = require('fs').promises;
 const path = require('path');
 const { exec } = require('child_process');
+require('dotenv').config({ path: '../.env' });
+
 
 
 // Pulls data from your repo, make sure you've configured branch as main OR change the coomand

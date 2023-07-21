@@ -2,6 +2,10 @@
 
 const axios = require('axios');
 const fs = require('fs').promises;
+require('dotenv').config({ path: '../.env' });
+const makeFolder = process.env.MAKE_FOLDER_PATH;
+
+
 
 const fetchAndStoreAppData = async (url, appName, version, value, token) => {
     try {
@@ -12,10 +16,10 @@ const fetchAndStoreAppData = async (url, appName, version, value, token) => {
         });
 
         // Create the apps directory if it does not exist
-        await fs.mkdir(`../make-account/apps/${appName}`, { recursive: true });
+        await fs.mkdir(`${makeFolder}/apps/${appName}`, { recursive: true });
 
         // Write the data to a JSON file
-        await fs.writeFile(`../make-account/apps/${appName}/${value}.json`, JSON.stringify(response.data, null, 2));  // should retunr error 
+        await fs.writeFile(`${makeFolder}/apps/${appName}/${value}.json`, JSON.stringify(response.data, null, 2));  // should retunr error 
 
         return response.data;
     }  catch (error) {
@@ -41,10 +45,10 @@ const fetchAndStoreModuleData = async (url, appName, version, moduleName, value,
         });
 
         // Create the apps/moduleName directory if it does not exist
-        await fs.mkdir(`../make-account/apps/${appName}/modules/${moduleName}`, { recursive: true });
+        await fs.mkdir(`${makeFolder}/apps/${appName}/modules/${moduleName}`, { recursive: true });
 
         // Write the data to a JSON file
-        await fs.writeFile(`../make-account/apps/${appName}/modules/${moduleName}/${value}.json`, JSON.stringify(response.data, null, 2));
+        await fs.writeFile(`${makeFolder}/apps/${appName}/modules/${moduleName}/${value}.json`, JSON.stringify(response.data, null, 2));
 
         return response.data;
     } catch (error) {
@@ -62,10 +66,10 @@ const fetchAndStoreRpcData = async (url, appName, version, rpcName, value, token
         });
 
         // Create the apps/moduleName directory if it does not exist
-        await fs.mkdir(`../make-account/apps/${appName}/rpcs/${rpcName}`, { recursive: true });
+        await fs.mkdir(`${makeFolder}/apps/${appName}/rpcs/${rpcName}`, { recursive: true });
 
         // Write the data to a JSON file
-        await fs.writeFile(`../make-account/apps/${appName}/rpcs/${rpcName}/${value}.json`, JSON.stringify(response.data, null, 2));
+        await fs.writeFile(`${makeFolder}/apps/${appName}/rpcs/${rpcName}/${value}.json`, JSON.stringify(response.data, null, 2));
 
         return response.data;
     } catch (error) {
@@ -84,10 +88,10 @@ const fetchAndStoreFunctionsData = async (url, appName, version, functionName, t
         });
 
         // Create the apps/moduleName directory if it does not exist
-        await fs.mkdir(`../make-account/apps/${appName}/functions/`, { recursive: true });
+        await fs.mkdir(`${makeFolder}/apps/${appName}/functions/`, { recursive: true });
 
         // Write the data to a JSON file
-        await fs.writeFile(`../make-account/apps/${appName}/functions/${value}.json`, JSON.stringify(response.data, null, 2));
+        await fs.writeFile(`${makeFolder}/apps/${appName}/functions/${value}.json`, JSON.stringify(response.data, null, 2));
 
         return response.data;
     } catch (error) {
@@ -106,10 +110,10 @@ const fetchAndStoreConnectionsData = async (url,appName, connectionName, value, 
         });
 
         // Create the apps/moduleName directory if it does not exist
-        await fs.mkdir(`../make-account/apps/${appName}/connections/`, { recursive: true });
+        await fs.mkdir(`${makeFolder}/apps/${appName}/connections/`, { recursive: true });
 
         // Write the data to a JSON file
-        await fs.writeFile(`../make-account/apps/${appName}/connections/${value}.json`, JSON.stringify(response.data, null, 2));
+        await fs.writeFile(`${makeFolder}/apps/${appName}/connections/${value}.json`, JSON.stringify(response.data, null, 2));
 
         return response.data;
     } catch (error) {
@@ -129,10 +133,10 @@ const fetchAndStoreWebhooksData = async (url, appName, webhookName, value, token
         });
 
         // Create the apps/moduleName directory if it does not exist
-        await fs.mkdir(`../make-account/apps/${appName}/webhooks/`, { recursive: true });
+        await fs.mkdir(`${makeFolder}/apps/${appName}/webhooks/`, { recursive: true });
 
         // Write the data to a JSON file
-        await fs.writeFile(`../make-account/apps/${appName}/webhooks/${value}.json`, JSON.stringify(response.data, null, 2));
+        await fs.writeFile(`${makeFolder}/apps/${appName}/webhooks/${value}.json`, JSON.stringify(response.data, null, 2));
 
         return response.data;
     } catch (error) {

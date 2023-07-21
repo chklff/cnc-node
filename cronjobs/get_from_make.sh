@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /root/cnc-node
+cd /root/cnc-node/src
 
 node syncMake.js
 

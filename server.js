@@ -1,7 +1,9 @@
+//server.js
+
 const express = require('express');
 const winston = require('winston');
 require('dotenv').config();
-const processWebhook = require('./githubWebhookHandler.js').processWebhook;
+const processWebhook = require('./src/githubWebhookHandler').processWebhook;
 const app = express();
 const port = process.env.PORT
 const server = process.env.SERVER
