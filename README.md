@@ -1,7 +1,7 @@
 # cnc-node
 
 I'M read em I'll tell you how to iunstall me... 
-
+```mermaid
 graph TD
 
     A[Express Server] -->|Handles Requests| B(Routes)
@@ -19,3 +19,4 @@ graph TD
     style A fill:#f9d,stroke:#333,stroke-width:2px
     style E fill:#ffc0cb,stroke:#333,stroke-width:2px
     style J fill:#ffc0cb,stroke:#333,stroke-width:2px
+```
