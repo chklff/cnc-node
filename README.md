@@ -23,6 +23,7 @@ graph TD
     M --> O[Node Sync Script]
 
 
+```mermaid
 graph TD
     A[server.js] -->|Imports| B[Modules]
     B -->|express| C[Express App]
