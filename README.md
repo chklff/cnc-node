@@ -21,22 +21,3 @@ graph TD
 
     L --> N[Git Operations]
     M --> O[Node Sync Script]
-
-
-```mermaid
-graph TD
-    A[server.js] -->|Imports| B[Modules]
-    B -->|express| C[Express App]
-    B -->|winston| D[Logger]
-    B -->|dotenv| E[Environment Variables]
-    B -->|processWebhook| F[Webhook Handler]
-    C -->|Middleware| G[express.json()]
-    D -->|Logging Setup| H[File and Console Logging]
-    E -->|Config Values| I[PORT, SERVER, etc.]
-    C -->|Routes| J[Route Handlers]
-    J -->|POST /update| K[Log and Respond to Update Requests]
-    J -->|Commented GET /scenarios| L[Scenarios Handler (Commented)]
-    J -->|POST /webhook| M[Handle Webhook and Log]
-    M --> F
-    C -->|Server Listen on Port| N[Server Initialization]
-```
