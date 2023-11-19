@@ -2,7 +2,7 @@
 
 I'M read em I'll tell you how to iunstall me... 
 
-
+```mermaid
 graph TD
 
     A[Server (server.js)] -->|Handles Webhook| B[Webhook Processor]
@@ -21,3 +21,4 @@ graph TD
 
     L --> N[Git Operations]
     M --> O[Node Sync Script]
+```
