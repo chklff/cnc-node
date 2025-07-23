@@ -91,7 +91,7 @@ const fetchAndStoreFunctionsData = async (url, appName, version, functionName, t
         await fs.mkdir(`${makeFolder}/apps/${appName}/functions/`, { recursive: true });
 
         // Write the data to a JSON file
-        await fs.writeFile(`${makeFolder}/apps/${appName}/functions/${value}.json`, JSON.stringify(response.data, null, 2));
+        await fs.writeFile(`${makeFolder}/apps/${appName}/functions/${functionName}.json`, JSON.stringify(response.data, null, 2));
 
         return response.data;
     } catch (error) {
@@ -209,7 +209,8 @@ const getApplicationFiles = async (url, appName, version, token) => {
 
     // Test with working custom  IMLs in account
     const functionResults = await Promise.all(functions.map(async afunction => {
-        return Promise.all(fetchAndStoreFunctionsData(url, appName, version, afunction.name, token));
+        //return Promise.all(fetchAndStoreFunctionsData(url, appName, version, afunction.name, token));
+        return fetchAndStoreFunctionsData(url, appName, version, afunction.name, token);
     }));
   
     const connectionResults = await Promise.all(connections.map(async connection => {
