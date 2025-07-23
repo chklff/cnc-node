@@ -226,4 +226,4 @@ BSD 3-Clause License
 
 ## Support
 
-For issues and questions, please check the logs first, then create an issue in the GitHub repository with relevant log excerpts and configuration details.
+For issues and questions, please check the logs first, then create an issue in the GitHub repository with relevant log excerpts and configuration details
