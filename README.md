@@ -35,7 +35,7 @@ Make-CNC is a Node.js application that facilitates automatic synchronization bet
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/chklff/cnc-node.git
 cd cnc-node
 ```
 
@@ -96,10 +96,40 @@ node src/applications.js
 
 ### Cron Jobs
 
-The system includes automated cron jobs:
+The system includes automated cron jobs for scheduled synchronization:
 
 - **`get_from_make.sh`**: Runs periodic sync from Make.com to GitHub
 - **`auto_commit.sh`**: Handles automated commits for synced changes
+
+#### Setting Up Cron Jobs
+
+1. Make the shell scripts executable:
+```bash
+chmod +x cronjobs/get_from_make.sh
+chmod +x cronjobs/auto_commit.sh
+```
+
+2. Edit your crontab:
+```bash
+crontab -e
+```
+
+3. Add cron job entries (example runs every 5 minutes):
+```bash
+# Sync from Make.com every 5 minutes
+*/5 * * * * /path/to/cnc-node/cronjobs/get_from_make.sh >> /path/to/cnc-node/cronjobs/cron.log 2>&1
+
+# Auto-commit changes every minute
+* * * * * /path/to/cnc-node/cronjobs/auto_commit.sh >> /path/to/cnc-node/cronjobs/cron.log 2>&1
+```
+
+4. Required environment variables for cron jobs:
+```env
+GITHUB_EMAIL=your-email@example.com
+GITHUB_DEV_TOKEN=your-github-personal-access-token
+```
+
+**Note**: Adjust the paths in the cron scripts (`/root/cnc-node/` and `/root/make-account/`) to match your actual installation directories.
 
 ## API Endpoints
 
