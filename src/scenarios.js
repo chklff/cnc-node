@@ -42,7 +42,7 @@ const listScenarios = async (url, organizationId, limit, token) => {
                 let existingFile = null;
                 try {
                     const files = await fs.readdir(scenariosDir);
-                    console.log(`Checking scenario ID ${scenario.id} in files:`, files.filter(f => f.endsWith('.json')));
+                    console.log(`Checking scenario ID ${scenario.id}`);
                     existingFile = files.find(file => file.endsWith(`-${scenario.id}.json`));
                     console.log(`Found existing file for scenario ${scenario.id}:`, existingFile);
                 } catch (error) {
