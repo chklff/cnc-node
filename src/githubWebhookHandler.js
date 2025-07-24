@@ -138,42 +138,100 @@ function removeFromMake() {
 //     });
 // }
 
-function processWebhook(req, user, makeFolder, baseURL, token) {
+async function processWebhook(req, user, makeFolder, baseURL, token) {
     const githubEvent = req.get('X-GitHub-Event');
 
     const commits = req.body.commits;
 
-    commits.forEach(commit => {
+    for (const commit of commits) {
         const username = commit.author.username;
         const message = commit.message;
 
         // Run gitPull regardless of the commit message
-        gitPull(makeFolder, () => {
-            if (!message.includes("Sync From Make")) {
-                if (username === user) {
-                    if (commit.added && commit.added.length > 0) {
-                        commit.modified.forEach(file => {
-                            addToMake(file, makeFolder, baseURL, token);
-                        });
-                    }
+        await new Promise((resolve) => {
+            gitPull(makeFolder, resolve);
+        });
 
-                    if (commit.modified && commit.modified.length > 0) {
-                        commit.modified.forEach(file => {
-                            updateMake(file, makeFolder, baseURL, token);
-                        });
-                    }
+        if (!message.includes("Sync From Make") && username === user) {
+            // Handle scenario file renames by checking for duplicate scenario IDs
+            await handleScenarioDuplicates(makeFolder);
 
-                    if (commit.removed && commit.removed.length > 0) {
-                        commit.modified.forEach(file => {
-                            removeFromMake(file, makeFolder, baseURL, token);
-                        });
+            if (commit.added && commit.added.length > 0) {
+                for (const file of commit.added) {
+                    if (file.endsWith('.json') && file.includes('scenarios/')) {
+                        await addToMake(file, makeFolder, baseURL, token);
                     }
                 }
-            } else {
-                console.log("Commit message contains 'Sync From Make'. Skipping update/add/remove actions for this commit.");
+            }
+
+            if (commit.modified && commit.modified.length > 0) {
+                for (const file of commit.modified) {
+                    if (file.endsWith('.json') && file.includes('scenarios/')) {
+                        await updateMake(file, makeFolder, baseURL, token);
+                    }
+                }
+            }
+
+            if (commit.removed && commit.removed.length > 0) {
+                for (const file of commit.removed) {
+                    if (file.endsWith('.json') && file.includes('scenarios/')) {
+                        await removeFromMake(file, makeFolder, baseURL, token);
+                    }
+                }
+            }
+        } else {
+            console.log("Commit message contains 'Sync From Make'. Skipping update/add/remove actions for this commit.");
+        }
+    }
+}
+
+async function handleScenarioDuplicates(makeFolder) {
+    const scenariosDir = `${makeFolder}/scenarios`;
+    try {
+        const files = await fs.readdir(scenariosDir);
+        const scenarioFiles = files.filter(file => file.endsWith('.json'));
+        
+        // Group files by scenario ID
+        const scenarioGroups = {};
+        scenarioFiles.forEach(file => {
+            const idMatch = file.match(/(\d+)\.json$/);
+            if (idMatch) {
+                const scenarioId = idMatch[1];
+                if (!scenarioGroups[scenarioId]) {
+                    scenarioGroups[scenarioId] = [];
+                }
+                scenarioGroups[scenarioId].push(file);
             }
         });
-    });
+        
+        // Remove duplicates - keep the most recently modified file
+        for (const [scenarioId, duplicateFiles] of Object.entries(scenarioGroups)) {
+            if (duplicateFiles.length > 1) {
+                console.log(`Found ${duplicateFiles.length} files for scenario ID ${scenarioId}: ${duplicateFiles.join(', ')}`);
+                
+                // Get file stats to find most recent
+                const fileStats = await Promise.all(
+                    duplicateFiles.map(async file => {
+                        const stats = await fs.stat(`${scenariosDir}/${file}`);
+                        return { file, mtime: stats.mtime };
+                    })
+                );
+                
+                // Sort by modification time, keep the newest
+                fileStats.sort((a, b) => b.mtime - a.mtime);
+                const keepFile = fileStats[0].file;
+                const filesToDelete = fileStats.slice(1).map(f => f.file);
+                
+                // Delete old duplicates
+                for (const fileToDelete of filesToDelete) {
+                    await fs.unlink(`${scenariosDir}/${fileToDelete}`);
+                    console.log(`Removed duplicate scenario file: ${fileToDelete} (kept ${keepFile})`);
+                }
+            }
+        }
+    } catch (error) {
+        console.log("No scenarios directory found or error reading it:", error.message);
+    }
 }
 
 

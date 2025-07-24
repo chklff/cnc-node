@@ -35,12 +35,17 @@ const listScenarios = async (url, organizationId, limit, token) => {
                 scenarioName = scenarioName.replace(/[/\\?%*:|"<>]/g, '_');
 
                 // Create the scenarios directory if it does not exist
-                await fs.mkdir(`${makeFolder}/scenarios`, { recursive: true });
+                const scenariosDir = `${makeFolder}/scenarios`;
+                await fs.mkdir(scenariosDir, { recursive: true });
 
                 // Check if a file with this scenario ID already exists (handles renames)
-                const scenariosDir = `${makeFolder}/scenarios`;
-                const files = await fs.readdir(scenariosDir);
-                const existingFile = files.find(file => file.endsWith(`-${scenario.id}.json`));
+                let existingFile = null;
+                try {
+                    const files = await fs.readdir(scenariosDir);
+                    existingFile = files.find(file => file.endsWith(`-${scenario.id}.json`));
+                } catch (error) {
+                    // Directory doesn't exist yet, that's fine
+                }
                 
                 const newFileName = `${scenarioName}-${scenario.id}.json`;
                 const newFilePath = `${scenariosDir}/${newFileName}`;
