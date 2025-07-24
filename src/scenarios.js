@@ -42,18 +42,27 @@ const listScenarios = async (url, organizationId, limit, token) => {
                 let existingFile = null;
                 try {
                     const files = await fs.readdir(scenariosDir);
+                    console.log(`Checking scenario ID ${scenario.id} in files:`, files.filter(f => f.endsWith('.json')));
                     existingFile = files.find(file => file.endsWith(`-${scenario.id}.json`));
+                    console.log(`Found existing file for scenario ${scenario.id}:`, existingFile);
                 } catch (error) {
-                    // Directory doesn't exist yet, that's fine
+                    console.log(`Directory ${scenariosDir} doesn't exist yet`);
                 }
                 
                 const newFileName = `${scenarioName}-${scenario.id}.json`;
                 const newFilePath = `${scenariosDir}/${newFileName}`;
 
+                console.log(`Processing scenario ${scenario.id}: old="${existingFile}" new="${newFileName}"`);
+
                 if (existingFile && existingFile !== newFileName) {
                     // Scenario was renamed - delete old file
+                    console.log(`Deleting old file: ${scenariosDir}/${existingFile}`);
                     await fs.unlink(`${scenariosDir}/${existingFile}`);
                     console.log(`Renamed scenario: ${existingFile} -> ${newFileName}`);
+                } else if (existingFile === newFileName) {
+                    console.log(`File name unchanged for scenario ${scenario.id}: ${newFileName}`);
+                } else {
+                    console.log(`New scenario file for ${scenario.id}: ${newFileName}`);
                 }
 
                 // Write the blueprint to a JSON file

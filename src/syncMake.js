@@ -8,7 +8,7 @@ require('dotenv').config({ path: '../.env' });
 //Retrieve scenarios
 (async () => {
     const result = await listScenarios(process.env.INSTANCE_URL, process.env.MAKE_ORG_ID, 1000, process.env.MAKE_API_KEY);
-    console.log(result);
+    // Removed console.log(result) to reduce noise
 })();
 
 
