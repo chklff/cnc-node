@@ -182,10 +182,10 @@ const fetchAndStoreConnectionsData = async (url,appName, connectionName, value, 
             }
         });
 
-        // Create the apps/moduleName directory if it does not exist
-        await fs.mkdir(`${makeFolder}/apps/${appName}/connections/`, { recursive: true });
+        // Create the apps/connections/connectionName directory if it does not exist
+        await fs.mkdir(`${makeFolder}/apps/${appName}/connections/${connectionName}`, { recursive: true });
 
-        const filePath = `${makeFolder}/apps/${appName}/connections/${value}.json`;
+        const filePath = `${makeFolder}/apps/${appName}/connections/${connectionName}/${value}.json`;
         const newContent = JSON.stringify(response.data, null, 2);
         
         // Check if file exists and content is different
@@ -199,7 +199,7 @@ const fetchAndStoreConnectionsData = async (url,appName, connectionName, value, 
 
         if (shouldWrite) {
             await fs.writeFile(filePath, newContent);
-            console.log(`Updated: ${appName}/connections/${value}.json`);
+            console.log(`Updated: ${appName}/connections/${connectionName}/${value}.json`);
         }
 
         return response.data;
@@ -219,10 +219,10 @@ const fetchAndStoreWebhooksData = async (url, appName, webhookName, value, token
             }
         });
 
-        // Create the apps/moduleName directory if it does not exist
-        await fs.mkdir(`${makeFolder}/apps/${appName}/webhooks/`, { recursive: true });
+        // Create the apps/webhooks/webhookName directory if it does not exist
+        await fs.mkdir(`${makeFolder}/apps/${appName}/webhooks/${webhookName}`, { recursive: true });
 
-        const filePath = `${makeFolder}/apps/${appName}/webhooks/${value}.json`;
+        const filePath = `${makeFolder}/apps/${appName}/webhooks/${webhookName}/${value}.json`;
         const newContent = JSON.stringify(response.data, null, 2);
         
         // Check if file exists and content is different
@@ -236,7 +236,7 @@ const fetchAndStoreWebhooksData = async (url, appName, webhookName, value, token
 
         if (shouldWrite) {
             await fs.writeFile(filePath, newContent);
-            console.log(`Updated: ${appName}/webhooks/${value}.json`);
+            console.log(`Updated: ${appName}/webhooks/${webhookName}/${value}.json`);
         }
 
         return response.data;
