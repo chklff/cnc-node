@@ -26,8 +26,25 @@ const fetchAndStoreAppData = async (url, appName, version, value, token) => {
         try {
             const existingContent = await fs.readFile(filePath, 'utf8');
             shouldWrite = existingContent !== newContent;
+            if (shouldWrite) {
+                // Debug: show what changed
+                console.log(`Content changed for ${appName}/${value}.json`);
+                console.log(`Old length: ${existingContent.length}, New length: ${newContent.length}`);
+                if (existingContent.length === newContent.length) {
+                    // Same length but different content - find the difference
+                    for (let i = 0; i < existingContent.length; i++) {
+                        if (existingContent[i] !== newContent[i]) {
+                            console.log(`First difference at position ${i}:`);
+                            console.log(`Old: "${existingContent.substring(i-10, i+10)}"`);
+                            console.log(`New: "${newContent.substring(i-10, i+10)}"`);
+                            break;
+                        }
+                    }
+                }
+            }
         } catch (error) {
             // File doesn't exist, write it
+            console.log(`New file: ${appName}/${value}.json`);
         }
 
         if (shouldWrite) {
