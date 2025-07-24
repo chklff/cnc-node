@@ -18,8 +18,22 @@ const fetchAndStoreAppData = async (url, appName, version, value, token) => {
         // Create the apps directory if it does not exist
         await fs.mkdir(`${makeFolder}/apps/${appName}`, { recursive: true });
 
-        // Write the data to a JSON file
-        await fs.writeFile(`${makeFolder}/apps/${appName}/${value}.json`, JSON.stringify(response.data, null, 2));  // should retunr error 
+        const filePath = `${makeFolder}/apps/${appName}/${value}.json`;
+        const newContent = JSON.stringify(response.data, null, 2);
+        
+        // Check if file exists and content is different
+        let shouldWrite = true;
+        try {
+            const existingContent = await fs.readFile(filePath, 'utf8');
+            shouldWrite = existingContent !== newContent;
+        } catch (error) {
+            // File doesn't exist, write it
+        }
+
+        if (shouldWrite) {
+            await fs.writeFile(filePath, newContent);
+            console.log(`Updated: ${appName}/${value}.json`);
+        }
 
         return response.data;
     }  catch (error) {
@@ -47,8 +61,22 @@ const fetchAndStoreModuleData = async (url, appName, version, moduleName, value,
         // Create the apps/moduleName directory if it does not exist
         await fs.mkdir(`${makeFolder}/apps/${appName}/modules/${moduleName}`, { recursive: true });
 
-        // Write the data to a JSON file
-        await fs.writeFile(`${makeFolder}/apps/${appName}/modules/${moduleName}/${value}.json`, JSON.stringify(response.data, null, 2));
+        const filePath = `${makeFolder}/apps/${appName}/modules/${moduleName}/${value}.json`;
+        const newContent = JSON.stringify(response.data, null, 2);
+        
+        // Check if file exists and content is different
+        let shouldWrite = true;
+        try {
+            const existingContent = await fs.readFile(filePath, 'utf8');
+            shouldWrite = existingContent !== newContent;
+        } catch (error) {
+            // File doesn't exist, write it
+        }
+
+        if (shouldWrite) {
+            await fs.writeFile(filePath, newContent);
+            console.log(`Updated: ${appName}/modules/${moduleName}/${value}.json`);
+        }
 
         return response.data;
     } catch (error) {
@@ -68,8 +96,22 @@ const fetchAndStoreRpcData = async (url, appName, version, rpcName, value, token
         // Create the apps/moduleName directory if it does not exist
         await fs.mkdir(`${makeFolder}/apps/${appName}/rpcs/${rpcName}`, { recursive: true });
 
-        // Write the data to a JSON file
-        await fs.writeFile(`${makeFolder}/apps/${appName}/rpcs/${rpcName}/${value}.json`, JSON.stringify(response.data, null, 2));
+        const filePath = `${makeFolder}/apps/${appName}/rpcs/${rpcName}/${value}.json`;
+        const newContent = JSON.stringify(response.data, null, 2);
+        
+        // Check if file exists and content is different
+        let shouldWrite = true;
+        try {
+            const existingContent = await fs.readFile(filePath, 'utf8');
+            shouldWrite = existingContent !== newContent;
+        } catch (error) {
+            // File doesn't exist, write it
+        }
+
+        if (shouldWrite) {
+            await fs.writeFile(filePath, newContent);
+            console.log(`Updated: ${appName}/rpcs/${rpcName}/${value}.json`);
+        }
 
         return response.data;
     } catch (error) {
@@ -90,8 +132,22 @@ const fetchAndStoreFunctionsData = async (url, appName, version, functionName, t
         // Create the apps/moduleName directory if it does not exist
         await fs.mkdir(`${makeFolder}/apps/${appName}/functions/`, { recursive: true });
 
-        // Write the data to a JSON file
-        await fs.writeFile(`${makeFolder}/apps/${appName}/functions/${functionName}.json`, JSON.stringify(response.data, null, 2));
+        const filePath = `${makeFolder}/apps/${appName}/functions/${functionName}.json`;
+        const newContent = JSON.stringify(response.data, null, 2);
+        
+        // Check if file exists and content is different
+        let shouldWrite = true;
+        try {
+            const existingContent = await fs.readFile(filePath, 'utf8');
+            shouldWrite = existingContent !== newContent;
+        } catch (error) {
+            // File doesn't exist, write it
+        }
+
+        if (shouldWrite) {
+            await fs.writeFile(filePath, newContent);
+            console.log(`Updated: ${appName}/functions/${functionName}.json`);
+        }
 
         return response.data;
     } catch (error) {
@@ -112,8 +168,22 @@ const fetchAndStoreConnectionsData = async (url,appName, connectionName, value, 
         // Create the apps/moduleName directory if it does not exist
         await fs.mkdir(`${makeFolder}/apps/${appName}/connections/`, { recursive: true });
 
-        // Write the data to a JSON file
-        await fs.writeFile(`${makeFolder}/apps/${appName}/connections/${value}.json`, JSON.stringify(response.data, null, 2));
+        const filePath = `${makeFolder}/apps/${appName}/connections/${value}.json`;
+        const newContent = JSON.stringify(response.data, null, 2);
+        
+        // Check if file exists and content is different
+        let shouldWrite = true;
+        try {
+            const existingContent = await fs.readFile(filePath, 'utf8');
+            shouldWrite = existingContent !== newContent;
+        } catch (error) {
+            // File doesn't exist, write it
+        }
+
+        if (shouldWrite) {
+            await fs.writeFile(filePath, newContent);
+            console.log(`Updated: ${appName}/connections/${value}.json`);
+        }
 
         return response.data;
     } catch (error) {
@@ -135,8 +205,22 @@ const fetchAndStoreWebhooksData = async (url, appName, webhookName, value, token
         // Create the apps/moduleName directory if it does not exist
         await fs.mkdir(`${makeFolder}/apps/${appName}/webhooks/`, { recursive: true });
 
-        // Write the data to a JSON file
-        await fs.writeFile(`${makeFolder}/apps/${appName}/webhooks/${value}.json`, JSON.stringify(response.data, null, 2));
+        const filePath = `${makeFolder}/apps/${appName}/webhooks/${value}.json`;
+        const newContent = JSON.stringify(response.data, null, 2);
+        
+        // Check if file exists and content is different
+        let shouldWrite = true;
+        try {
+            const existingContent = await fs.readFile(filePath, 'utf8');
+            shouldWrite = existingContent !== newContent;
+        } catch (error) {
+            // File doesn't exist, write it
+        }
+
+        if (shouldWrite) {
+            await fs.writeFile(filePath, newContent);
+            console.log(`Updated: ${appName}/webhooks/${value}.json`);
+        }
 
         return response.data;
     } catch (error) {
