@@ -37,8 +37,22 @@ const listScenarios = async (url, organizationId, limit, token) => {
                 // Create the scenarios directory if it does not exist
                 await fs.mkdir(`${makeFolder}/scenarios`, { recursive: true });
 
+                // Check if a file with this scenario ID already exists (handles renames)
+                const scenariosDir = `${makeFolder}/scenarios`;
+                const files = await fs.readdir(scenariosDir);
+                const existingFile = files.find(file => file.endsWith(`-${scenario.id}.json`));
+                
+                const newFileName = `${scenarioName}-${scenario.id}.json`;
+                const newFilePath = `${scenariosDir}/${newFileName}`;
+
+                if (existingFile && existingFile !== newFileName) {
+                    // Scenario was renamed - delete old file
+                    await fs.unlink(`${scenariosDir}/${existingFile}`);
+                    console.log(`Renamed scenario: ${existingFile} -> ${newFileName}`);
+                }
+
                 // Write the blueprint to a JSON file
-                await fs.writeFile(`${makeFolder}/scenarios/${scenarioName}-${scenario.id}.json`, JSON.stringify(blueprintResponse.data.response.blueprint, null, 2));
+                await fs.writeFile(newFilePath, JSON.stringify(blueprintResponse.data.response.blueprint, null, 2));
 
                 // Increment the file count
                 fileCount++;
